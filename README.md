@@ -8,7 +8,7 @@
 
 - Backend: Java 21, Spring Boot, Spring Data JPA, Maven
 - Frontend: React 18, Vite, Bootstrap, Axios
-- Cơ sở dữ liệu: Microsoft SQL Server (mặc định) hoặc H2 (chạy thử)
+- Cơ sở dữ liệu: Microsoft SQL Server
 
 ## Cấu trúc thư mục
 
@@ -22,7 +22,7 @@ assignment2/
 
 - JDK 21
 - Node.js và npm
-- SQL Server nếu chạy với cơ sở dữ liệu mặc định
+- SQL Server
 
 ## Chạy backend
 
@@ -38,17 +38,6 @@ cd be
 ```
 
 Backend chạy tại `http://localhost:8080`; REST API có tiền tố `/api`.
-
-### Chạy thử với H2
-
-Có thể dùng H2 in-memory thay cho SQL Server:
-
-```powershell
-cd be
-.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=h2"
-```
-
-Dữ liệu H2 sẽ được tạo lại khi dừng ứng dụng.
 
 ## Chạy frontend
 
