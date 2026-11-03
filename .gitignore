@@ -1,0 +1,16 @@
+# Frontend dependencies and build output
+fe/node_modules/
+fe/dist/
+fe/.env
+fe/.env.*
+!fe/.env.example
+
+# Backend build output
+be/target/
+be/build/
+
+# IDE and local workspace state
+.idea/
+**/.idea/
+.vscode/
+*.iml

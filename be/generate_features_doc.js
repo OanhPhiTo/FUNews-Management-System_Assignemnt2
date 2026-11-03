@@ -1,0 +1,660 @@
+import fs from 'fs';
+import path from 'path';
+
+const docContent = `<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" 
+      xmlns:w="urn:schemas-microsoft-com:office:word" 
+      xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<title>Danh Sách Chức Năng Và Luồng Thực Thi - FUNewsManagementSystem</title>
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 13pt;
+    line-height: 1.6;
+    color: #111827;
+    margin: 2cm;
+  }
+  h1 {
+    font-size: 22pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    text-align: center;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+  .sub-title {
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold;
+    color: #4b5563;
+    margin-bottom: 25px;
+  }
+  .meta-box {
+    border: 2px solid #1e3a8a;
+    background-color: #f0f7ff;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    border-radius: 6px;
+  }
+  .meta-box table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .meta-box td {
+    padding: 4px 8px;
+    font-size: 12pt;
+  }
+  h2 {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    border-bottom: 2px solid #1e3a8a;
+    padding-bottom: 5px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+  h3 {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #0369a1;
+    margin-top: 22px;
+    margin-bottom: 10px;
+  }
+  p {
+    margin-bottom: 10px;
+    text-align: justify;
+  }
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0 20px 0;
+  }
+  table.data-table th, table.data-table td {
+    border: 1px solid #9ca3af;
+    padding: 8px 10px;
+    font-size: 11pt;
+  }
+  table.data-table th {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: left;
+  }
+  table.data-table tr:nth-child(even) {
+    background-color: #f9fafb;
+  }
+  .callout-info {
+    border-left: 5px solid #2563eb;
+    background-color: #eff6ff;
+    padding: 12px 16px;
+    margin: 15px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .callout-warning {
+    border-left: 5px solid #d97706;
+    background-color: #fffbeb;
+    padding: 12px 16px;
+    margin: 15px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .callout-danger {
+    border-left: 5px solid #dc2626;
+    background-color: #fef2f2;
+    padding: 12px 16px;
+    margin: 15px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .feature-card {
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .feature-header {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-bottom: 8px;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 6px;
+  }
+  .flow-step {
+    margin-bottom: 8px;
+    padding-left: 10px;
+  }
+  .step-num {
+    font-weight: bold;
+    color: #2563eb;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 10.5pt;
+    font-weight: bold;
+    border-radius: 4px;
+  }
+  .badge-admin { background-color: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+  .badge-staff { background-color: #e0f2fe; color: #075985; border: 1px solid #38bdf8; }
+  .badge-public { background-color: #dcfce7; color: #166534; border: 1px solid #4ade80; }
+  code {
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+    background-color: #f1f5f9;
+    color: #b91c1c;
+    padding: 2px 5px;
+    font-size: 11pt;
+    border-radius: 3px;
+  }
+  pre {
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+    background-color: #1e293b;
+    color: #f8fafc;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 10.5pt;
+    overflow-x: auto;
+  }
+</style>
+</head>
+<body>
+
+  <h1>TÀI LIỆU ĐẶC TẢ CHỨC NĂNG VÀ LUỒNG THỰC THI</h1>
+  <div class="sub-title">HỆ THỐNG QUẢN LÝ TIN TỨC - FUNEWSMANAGEMENTSYSTEM<br>ASSIGNMENT 02 - SBA301 (SPRING BOOT 3 &amp; REACTJS)</div>
+
+  <div class="meta-box">
+    <table>
+      <tr>
+        <td width="25%"><strong>Môn học:</strong></td>
+        <td width="35%">SBA301 - Distributed Systems / Web Services</td>
+        <td width="20%"><strong>Lớp học:</strong></td>
+        <td width="20%">SE1910</td>
+      </tr>
+      <tr>
+        <td><strong>Đề tài:</strong></td>
+        <td>FUNewsManagementSystem (Assignment 02)</td>
+        <td><strong>Cơ sở dữ liệu:</strong></td>
+        <td>MS SQL Server (<code>assignment2</code>)</td>
+      </tr>
+      <tr>
+        <td><strong>Kiến trúc Backend:</strong></td>
+        <td>Spring Boot 3 (3-Layer with Repository)</td>
+        <td><strong>Kiến trúc Frontend:</strong></td>
+        <td>ReactJS Client (Axios, Bootstrap 5)</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2>PHẦN 1: BẢNG TỔNG HỢP CÁC CHỨC NĂNG CỦA HỆ THỐNG</h2>
+  <p>Hệ thống được thiết kế với 3 phân quyền đối tượng người dùng rõ rệt:</p>
+  <ul>
+    <li><span class="badge badge-public">Khách vãng lai (Public / Guest)</span>: Người dùng ngoài trường, sinh viên, phụ huynh xem tin tức công khai không cần đăng nhập.</li>
+    <li><span class="badge badge-admin">Quản trị viên (Admin - Role 1)</span>: Quản trị tài khoản người dùng hệ thống.</li>
+    <li><span class="badge badge-staff">Nhân viên biên tập (Staff - Role 2)</span>: Quản lý danh mục, bài viết tin tức, gắn thẻ tag, xem lịch sử cá nhân và quản lý hồ sơ.</li>
+  </ul>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th width="8%">STT</th>
+        <th width="22%">Tên Chức Năng</th>
+        <th width="15%">Phân Quyền (Role)</th>
+        <th width="25%">Giao Diện Thao Tác (UI)</th>
+        <th width="30%">Ràng Buộc Nghiệp Vụ Cốt Lõi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>FN-01</strong></td>
+        <td><strong>Xem danh sách tin tức công khai</strong></td>
+        <td><span class="badge badge-public">Public</span></td>
+        <td>Card Grid trên trang chủ, phân trang, lọc realtime.</td>
+        <td>Chỉ hiển thị bài viết có <code>NewsStatus = active (1)</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-02</strong></td>
+        <td><strong>Tìm kiếm &amp; Lọc tin tức</strong></td>
+        <td><span class="badge badge-public">Public</span></td>
+        <td>Thanh tìm kiếm theo từ khóa + Dropdown chọn Danh mục.</td>
+        <td>Tìm kiếm đa trường (Tiêu đề, Headline, Nguồn tin) không phân biệt hoa thường.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-03</strong></td>
+        <td><strong>Đọc chi tiết tin tức</strong></td>
+        <td><span class="badge badge-public">Public</span></td>
+        <td><strong>Popup Dialog (Modal)</strong> hiển thị toàn văn.</td>
+        <td>Hiển thị đầy đủ Headline, Nội dung, Tác giả, Ngày tạo, Nguồn và danh sách Thẻ Tag.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-04</strong></td>
+        <td><strong>Đăng nhập thành viên (Authentication)</strong></td>
+        <td><span class="badge badge-public">Public</span></td>
+        <td>Popup Modal đăng nhập (Email + Mật khẩu).</td>
+        <td>Validate định dạng email, kiểm tra mật khẩu. Nhận diện Role (1: Admin, 2: Staff).</td>
+      </tr>
+      <tr>
+        <td><strong>FN-05</strong></td>
+        <td><strong>Admin - Quản lý tài khoản (Xem &amp; Tìm kiếm)</strong></td>
+        <td><span class="badge badge-admin">Admin (Role 1)</span></td>
+        <td>Bảng tài khoản + Tìm kiếm tên/email + Lọc Role.</td>
+        <td>Hiển thị trạng thái tài khoản: "An toàn để xóa" hoặc "Đã tạo bài viết (Được bảo vệ)".</td>
+      </tr>
+      <tr>
+        <td><strong>FN-06</strong></td>
+        <td><strong>Admin - Thêm mới tài khoản</strong></td>
+        <td><span class="badge badge-admin">Admin (Role 1)</span></td>
+        <td><strong>Popup Dialog (Modal)</strong> điền form.</td>
+        <td>Validate tên (2-100 ký tự), email đúng chuẩn và chưa tồn tại trong hệ thống.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-07</strong></td>
+        <td><strong>Admin - Cập nhật tài khoản</strong></td>
+        <td><span class="badge badge-admin">Admin (Role 1)</span></td>
+        <td><strong>Popup Dialog (Modal)</strong> điền sẵn dữ liệu.</td>
+        <td>Cho phép đổi vai trò, đổi mật khẩu mới (nếu để trống thì giữ nguyên mật khẩu cũ).</td>
+      </tr>
+      <tr>
+        <td><strong>FN-08</strong></td>
+        <td><strong>Admin - Xóa tài khoản (Kiểm tra ràng buộc)</strong></td>
+        <td><span class="badge badge-admin">Admin (Role 1)</span></td>
+        <td><strong>Confirm Dialog (Hộp thoại xác nhận)</strong> cảnh báo.</td>
+        <td><strong>RÀNG BUỘC:</strong> Nếu tài khoản đã từng tạo bài viết tin tức ➔ <strong>CHẶN XÓA (HTTP 400)</strong>. Chỉ cho xóa khi chưa tạo bài viết nào.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-09</strong></td>
+        <td><strong>Staff - Quản lý danh mục (CRUD &amp; Tìm kiếm)</strong></td>
+        <td><span class="badge badge-staff">Staff (Role 2)</span></td>
+        <td>Bảng danh mục + <strong>Popup Modal</strong> Thêm/Sửa.</td>
+        <td>Hỗ trợ cấu trúc cha - con (Parent Category), quản lý trạng thái kích hoạt <code>IsActive</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-10</strong></td>
+        <td><strong>Staff - Xóa danh mục (Kiểm tra ràng buộc)</strong></td>
+        <td><span class="badge badge-staff">Staff (Role 2)</span></td>
+        <td><strong>Confirm Dialog</strong> xác nhận xóa.</td>
+        <td><strong>RÀNG BUỘC:</strong> Nếu danh mục đang được gắn vào bài viết hoặc đang là danh mục cha ➔ <strong>CHẶN XÓA (HTTP 400)</strong>.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-11</strong></td>
+        <td><strong>Staff - Quản lý bài viết tin tức (CRUD)</strong></td>
+        <td><span class="badge badge-staff">Staff (Role 2)</span></td>
+        <td>Bảng tin tức + <strong>Popup Modal</strong> Thêm/Sửa.</td>
+        <td>Quản lý Tiêu đề, Headline, Nội dung, Danh mục, Trạng thái (Active/Inactive), Gắn nhiều thẻ Tags.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-12</strong></td>
+        <td><strong>Staff - Xóa bài viết tin tức</strong></td>
+        <td><span class="badge badge-staff">Staff (Role 2)</span></td>
+        <td><strong>Confirm Dialog</strong> xác nhận xóa.</td>
+        <td>Tự động xóa các bản ghi liên kết trong bảng trung gian <code>NewsTag</code> trước khi xóa bài viết.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-13</strong></td>
+        <td><strong>Staff - Xem lịch sử bài viết của chính mình</strong></td>
+        <td><span class="badge badge-staff">Staff (Role 2)</span></td>
+        <td>Dashboard "My History" + Thẻ KPI thống kê bài viết.</td>
+        <td>Lọc chính xác theo <code>CreatedByID == currentStaffId</code>. Hiển thị số lượng bài Active / Draft.</td>
+      </tr>
+      <tr>
+        <td><strong>FN-14</strong></td>
+        <td><strong>Staff &amp; Admin - Quản lý thông tin cá nhân (Profile)</strong></td>
+        <td><span class="badge badge-staff">Staff</span> / <span class="badge badge-admin">Admin</span></td>
+        <td>Trang Profile + <strong>Popup Modal</strong> Sửa hồ sơ.</td>
+        <td>Cập nhật Họ tên, Email, Đổi mật khẩu mới (bắt buộc kiểm tra khớp mật khẩu hiện tại).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>PHẦN 2: CHI TIẾT LUỒNG THỰC THI (EXECUTION FLOWS) TỪNG CHỨC NĂNG</h2>
+
+  <!-- CHỨC NĂNG 1, 2, 3: PUBLIC NEWS -->
+  <div class="feature-card">
+    <div class="feature-header">1. Chức năng Xem, Tìm kiếm &amp; Đọc chi tiết Tin tức (Public News)</div>
+    <p><strong>Mục đích:</strong> Cho phép bất kỳ ai (không cần đăng nhập) tiếp cận các thông tin tin tức chính thức đã được xuất bản của trường.</p>
+    <div class="flow-step"><span class="step-num">Bước 1:</span> Người dùng truy cập <code>http://localhost:3000</code>. Component <code>PublicNewsPage</code> kích hoạt lifecycle <code>useEffect</code>.</div>
+    <div class="flow-step"><span class="step-num">Bước 2:</span> Axios gửi 2 HTTP GET song song:
+      <ul>
+        <li><code>GET /api/public/categories</code> ➔ Lấy danh mục đang kích hoạt để đổ vào Dropdown bộ lọc.</li>
+        <li><code>GET /api/public/news?keyword=&amp;categoryId=</code> ➔ Lấy danh sách tin tức công khai.</li>
+      </ul>
+    </div>
+    <div class="flow-step"><span class="step-num">Bước 3:</span> Tại Backend, <code>PublicNewsController</code> chuyển lời gọi sang <code>NewsArticleServiceImpl.getPublicArticles()</code>.</div>
+    <div class="flow-step"><span class="step-num">Bước 4:</span> <code>NewsArticleRepository</code> thực thi câu truy vấn JPQL:
+      <pre>SELECT n FROM NewsArticle n WHERE n.newsStatus = true AND (:keyword IS NULL OR LOWER(n.newsTitle) LIKE ...) ORDER BY n.createdDate DESC</pre>
+      Chỉ lấy các bài viết có <code>newsStatus = true</code> (Đảm bảo quy tắc bảo mật không lộ bài nháp).
+    </div>
+    <div class="flow-step"><span class="step-num">Bước 5:</span> Dữ liệu được ánh xạ sang <code>NewsArticleResponse</code> (kèm danh sách TagDTO và Tên tác giả) gửi về cho React.</div>
+    <div class="flow-step"><span class="step-num">Bước 6:</span> React cập nhật State <code>articles</code>, vẽ giao diện dạng Card tin tức sinh động.</div>
+    <div class="flow-step"><span class="step-num">Bước 7 (Xem chi tiết):</span> Người dùng bấm nút <em>"Read Story"</em> trên một Card tin tức ➔ Gửi <code>GET /api/public/news/{id}</code> ➔ Mở <strong>Popup Dialog (Modal)</strong> hiển thị toàn văn bài viết, ngày đăng, tác giả và các thẻ tag.</div>
+  </div>
+
+  <!-- CHỨC NĂNG 4: AUTHENTICATION -->
+  <div class="feature-card">
+    <div class="feature-header">2. Chức năng Xác thực Đăng nhập &amp; Phân quyền (Authentication &amp; Role-based Flow)</div>
+    <p><strong>Mục đích:</strong> Xác thực danh tính của Quản trị viên (Admin) và Nhân viên biên tập (Staff) bằng Email và Mật khẩu.</p>
+    <div class="flow-step"><span class="step-num">Bước 1:</span> Người dùng bấm nút <em>"Member Login"</em> trên thanh Navbar ➔ <strong>Popup Dialog LoginPage</strong> hiển thị.</div>
+    <div class="flow-step"><span class="step-num">Bước 2:</span> Người dùng nhập Email và Mật khẩu (hoặc bấm chọn nút nhanh <em>Admin (Role 1)</em> / <em>Staff 1 (Role 2)</em>).</div>
+    <div class="flow-step"><span class="step-num">Bước 3:</span> Client thực hiện validation đầu vào: kiểm tra không rỗng và định dạng email. Nếu hợp lệ, Axios gửi:
+      <pre>POST /api/auth/login
+Payload: { "email": "admin@fpt.edu.vn", "password": "..." }</pre>
+    </div>
+    <div class="flow-step"><span class="step-num">Bước 4:</span> <code>AuthController</code> nhận DTO <code>@Valid LoginRequest</code>, chuyển sang <code>AuthServiceImpl.login()</code>.</div>
+    <div class="flow-step"><span class="step-num">Bước 5:</span> Service gọi <code>SystemAccountRepository.findByAccountEmail(email)</code>:
+      <ul>
+        <li><strong>Trường hợp lỗi:</strong> Email không tồn tại hoặc mật khẩu không khớp ➔ Ném <code>BadRequestException("Invalid email or password.")</code> ➔ Trả về HTTP 400. Client hiển thị cảnh báo đỏ trên form đăng nhập.</li>
+        <li><strong>Trường hợp thành công:</strong> Lấy thông tin tài khoản, tạo mã Token phiên làm việc và đóng gói thành <code>LoginResponse</code> trả về HTTP 200:
+          <pre>{ "accountID": 1, "accountName": "Administrator", "accountRole": 1, "roleName": "Admin", "token": "..." }</pre>
+        </li>
+      </ul>
+    </div>
+    <div class="flow-step"><span class="step-num">Bước 6:</span> React lưu thông tin vào <code>localStorage ('funews_user')</code>, cập nhật State <code>currentUser</code>:
+      <ul>
+        <li>Nếu <code>accountRole === 1 (Admin)</code>: Chuyển active tab sang <strong>Account Management</strong>, thanh Navbar hiển thị menu Admin.</li>
+        <li>Nếu <code>accountRole === 2 (Staff)</code>: Chuyển active tab sang <strong>News Management</strong>, thanh Navbar mở rộng các menu: <em>Category Management</em>, <em>News Management</em>, <em>My History</em>, và <em>Profile</em>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CHỨC NĂNG 5, 6, 7, 8: ADMIN ACCOUNT MANAGEMENT -->
+  <div class="feature-card">
+    <div class="feature-header">3. Chức năng Quản lý Tài khoản &amp; Ràng buộc Xóa (Admin Account Management)</div>
+    <p><strong>Phân quyền:</strong> Dành riêng cho Quản trị viên (Admin - Role 1).</p>
+    
+    <h4>A. Luồng Thêm mới Tài khoản (Create):</h4>
+    <div class="flow-step"><span class="step-num">1.</span> Admin bấm nút <em>"Add New Account"</em> ➔ <strong>Popup Dialog (Modal)</strong> hiển thị form trống.</div>
+    <div class="flow-step"><span class="step-num">2.</span> Admin nhập: Họ tên (2-100 ký tự), Email (đúng chuẩn), Quyền (Admin: 1 hoặc Staff: 2), Mật khẩu (tối thiểu 4 ký tự).</div>
+    <div class="flow-step"><span class="step-num">3.</span> Client validate form. Khi bấm Lưu ➔ Gửi <code>POST /api/accounts</code>.</div>
+    <div class="flow-step"><span class="step-num">4.</span> <code>SystemAccountServiceImpl</code> kiểm tra <code>existsByAccountEmail(email)</code>:
+      <ul>
+        <li>Nếu email đã tồn tại: Ném <code>BadRequestException("Email already exists")</code> ➔ Trả về lỗi HTTP 400.</li>
+        <li>Nếu hợp lệ: Lưu thực thể <code>SystemAccount</code> vào database qua Repository, trả về <code>AccountResponse</code> (HTTP 201 Created).</li>
+      </ul>
+    </div>
+    <div class="flow-step"><span class="step-num">5.</span> Client đóng Modal popup, hiển thị thông báo Toast xanh <em>"Account created successfully!"</em> và tải lại danh sách tài khoản.</div>
+
+    <h4>B. Luồng Cập nhật Tài khoản (Update):</h4>
+    <div class="flow-step"><span class="step-num">1.</span> Admin bấm icon Sửa trên dòng tài khoản ➔ Mở <strong>Popup Dialog</strong> điền sẵn thông tin cũ.</div>
+    <div class="flow-step"><span class="step-num">2.</span> Admin có thể sửa tên, email, vai trò hoặc đổi mật khẩu mới (nếu để trống mật khẩu thì hệ thống giữ nguyên mật khẩu cũ).</div>
+    <div class="flow-step"><span class="step-num">3.</span> Bấm Lưu ➔ Gửi <code>PUT /api/accounts/{id}</code>. Backend kiểm tra trùng email với các tài khoản khác, cập nhật DB và trả về kết quả thành công.</div>
+
+    <h4>C. Luồng Xóa Tài khoản &amp; Kiểm tra Ràng buộc Nghiệp vụ cốt lõi (Delete with Constraint):</h4>
+    <div class="callout-danger">
+      <strong>QUY TẮC RÀNG BUỘC CỦA ĐỀ BÀI:</strong> "The delete action will delete an account in the case this account is not belong to any news articles (created). If the account is already created any news article, cannot delete."
+    </div>
+    <div class="flow-step"><span class="step-num">1.</span> Trên bảng tài khoản, cột <em>Integrity Status</em> hiển thị trực quan:
+      <ul>
+        <li>Tài khoản chưa từng viết bài (ví dụ <code>teststaff@fpt.edu.vn</code>): Hiển thị huy hiệu xanh <strong>"Safe to delete"</strong>.</li>
+        <li>Tài khoản đã từng viết bài (ví dụ <code>staff1@fpt.edu.vn</code>): Hiển thị huy hiệu vàng <strong>"Has articles (Protected)"</strong>.</li>
+      </ul>
+    </div>
+    <div class="flow-step"><span class="step-num">2.</span> Khi Admin bấm nút Xóa ➔ <strong>Hộp thoại xác nhận ConfirmModal</strong> bật lên kèm biểu tượng cảnh báo tam giác đỏ.</div>
+    <div class="flow-step"><span class="step-num">3.</span> Admin bấm nút xác nhận xóa ➔ Axios gửi <code>DELETE /api/accounts/{id}</code>.</div>
+    <div class="flow-step"><span class="step-num">4.</span> Tại Backend, <code>SystemAccountServiceImpl.deleteAccount(id)</code> thực thi kiểm tra nghiệp vụ:
+      <pre>if (newsArticleRepository.existsByCreatedBy_AccountID(id)) {
+    throw new BadRequestException("Cannot delete account because it has already created one or more news articles.");
+}</pre>
+    </div>
+    <div class="flow-step"><span class="step-num">5.</span> Kết quả xử lý:
+      <ul>
+        <li><strong>Nếu tài khoản ĐÃ TẠO BÀI VIẾT:</strong> <code>GlobalExceptionHandler</code> bắt ngoại lệ, trả về mã lỗi <code>400 Bad Request</code> kèm nội dung giải thích. Giao diện React hiển thị thông báo Alert màu đỏ chặn xóa thành công. Dữ liệu trong Database được bảo toàn tuyệt đối.</li>
+        <li><strong>Nếu tài khoản CHƯA TẠO BÀI VIẾT:</strong> Thực hiện <code>accountRepository.delete(account)</code> ➔ Trả về HTTP 200. Client đóng ConfirmModal, xóa dòng khỏi bảng và hiện thông báo xóa thành công.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CHỨC NĂNG 9, 10: STAFF CATEGORY MANAGEMENT -->
+  <div class="feature-card">
+    <div class="feature-header">4. Chức năng Quản lý Danh mục Tin tức &amp; Ràng buộc Xóa (Category Management)</div>
+    <p><strong>Phân quyền:</strong> Dành riêng cho Nhân viên (Staff - Role 2).</p>
+    
+    <h4>A. Luồng Xem, Tìm kiếm &amp; Lọc Danh mục:</h4>
+    <div class="flow-step"><span class="step-num">1.</span> Staff vào tab Category Management. Axios gọi <code>GET /api/categories?keyword=&amp;isActive=</code>.</div>
+    <div class="flow-step"><span class="step-num">2.</span> Bảng hiển thị: Mã ID, Tên danh mục, Mô tả, Danh mục cha (nếu có phân cấp), Trạng thái (Active/Inactive), và Cột kiểm soát tính toàn vẹn.</div>
+
+    <h4>B. Luồng Thêm mới / Cập nhật Danh mục (Qua Popup Dialog):</h4>
+    <div class="flow-step"><span class="step-num">1.</span> Staff bấm <em>"Add New Category"</em> hoặc icon <em>Sửa</em> ➔ <strong>Popup Dialog (Modal)</strong> hiển thị.</div>
+    <div class="flow-step"><span class="step-num">2.</span> Điền Tên danh mục, Mô tả, chọn Danh mục cha (hỗ trợ phân cấp cây danh mục), bật/tắt công tắc trạng thái <code>IsActive</code>.</div>
+    <div class="flow-step"><span class="step-num">3.</span> Bấm Lưu ➔ Gửi <code>POST /api/categories</code> (hoặc <code>PUT /api/categories/{id}</code>). Backend kiểm tra tính hợp lệ và lưu vào bảng <code>Category</code>.</div>
+
+    <h4>C. Luồng Xóa Danh mục có Kiểm tra Ràng buộc (Business Rule):</h4>
+    <div class="callout-danger">
+      <strong>QUY TẮC RÀNG BUỘC CỦA ĐỀ BÀI:</strong> "The delete action will delete an item in the case this item is not belong to any news articles. If the item is already stored in a news article cannot delete."
+    </div>
+    <div class="flow-step"><span class="step-num">1.</span> Staff bấm nút Xóa một danh mục ➔ <strong>ConfirmModal</strong> xuất hiện hỏi xác nhận.</div>
+    <div class="flow-step"><span class="step-num">2.</span> Khi Staff xác nhận ➔ Axios gửi <code>DELETE /api/categories/{id}</code>.</div>
+    <div class="flow-step"><span class="step-num">3.</span> <code>CategoryServiceImpl.deleteCategory(id)</code> kiểm tra 2 điều kiện an toàn:
+      <ul>
+        <li><code>newsArticleRepository.existsByCategory_CategoryID(id)</code>: Kiểm tra có bài viết nào thuộc danh mục này không.</li>
+        <li><code>categoryRepository.existsByParentCategory_CategoryID(id)</code>: Kiểm tra có danh mục con nào đang phụ thuộc vào danh mục này không.</li>
+      </ul>
+    </div>
+    <div class="flow-step"><span class="step-num">4.</span> <strong>Nếu đang có bài viết hoặc có danh mục con:</strong> Backend ném <code>BadRequestException</code> chặn thao tác xóa ➔ Trả về HTTP 400. Giao diện báo lỗi đỏ không cho phép xóa danh mục.</div>
+    <div class="flow-step"><span class="step-num">5.</span> <strong>Nếu danh mục không chứa bài viết nào:</strong> Xóa bản ghi an toàn khỏi cơ sở dữ liệu.</div>
+  </div>
+
+  <!-- CHỨC NĂNG 11, 12: STAFF NEWS ARTICLE MANAGEMENT -->
+  <div class="feature-card">
+    <div class="feature-header">5. Chức năng Quản lý Bài viết Tin tức &amp; Gắn thẻ Tag (News Article Management)</div>
+    <p><strong>Phân quyền:</strong> Dành riêng cho Nhân viên (Staff - Role 2).</p>
+    
+    <h4>A. Luồng Xem danh sách &amp; Lọc Tin tức:</h4>
+    <div class="flow-step"><span class="step-num">1.</span> Staff xem bảng toàn bộ tin tức gồm cả bài xuất bản (Active) và bài nháp (Inactive).</div>
+    <div class="flow-step"><span class="step-num">2.</span> Hỗ trợ lọc đồng thời theo: Từ khóa tìm kiếm, Danh mục tin tức, và Trạng thái xuất bản.</div>
+
+    <h4>B. Luồng Tạo mới Bài viết Tin tức (Create News via Popup Dialog):</h4>
+    <div class="flow-step"><span class="step-num">1.</span> Staff bấm <em>"Create News Article"</em> ➔ <strong>Popup Dialog (Modal)</strong> lớn mở ra.</div>
+    <div class="flow-step"><span class="step-num">2.</span> Đồng thời tải danh sách Danh mục kích hoạt và danh sách Thẻ Tag từ <code>GET /api/tags</code>.</div>
+    <div class="flow-step"><span class="step-num">3.</span> Staff điền thông tin bài viết:
+      <ul>
+        <li>Mã bài viết (tùy chọn tự đặt hoặc để hệ thống tự sinh mã <code>NA...</code>).</li>
+        <li>Chọn Danh mục tin tức (bắt buộc).</li>
+        <li>Nguồn tin (e.g. FU Press, IT Department).</li>
+        <li>Tiêu đề bài viết (News Title) &amp; Tóm tắt (Headline).</li>
+        <li>Nội dung chi tiết (News Content).</li>
+        <li><strong>Gắn thẻ Tag:</strong> Danh sách các thẻ từ khóa hiển thị dưới dạng nút bấm tương tác (Toggle badges). Staff bấm chọn một hoặc nhiều thẻ phù hợp (ví dụ: #Technology, #Event).</li>
+        <li>Trạng thái xuất bản: Active (Hiển thị ra ngoài trang chủ) hoặc Inactive (Lưu bản nháp nội bộ).</li>
+      </ul>
+    </div>
+    <div class="flow-step"><span class="step-num">4.</span> Bấm Lưu ➔ Axios gửi <code>POST /api/news-articles</code> kèm Header <code>X-User-Id</code> để xác định Staff đang thao tác.</div>
+    <div class="flow-step"><span class="step-num">5.</span> Tại Backend, <code>NewsArticleServiceImpl.createArticle()</code>:
+      <ul>
+        <li>Gán <code>CreatedByID</code> chính là tài khoản của Staff đang đăng nhập.</li>
+        <li>Gán <code>CreatedDate</code> là thời gian hiện tại.</li>
+        <li>Lấy danh sách các thực thể <code>Tag</code> theo mảng <code>tagIDs</code> và thêm vào <code>Set&lt;Tag&gt; tags</code> của thực thể NewsArticle.</li>
+        <li>Lưu vào bảng <code>NewsArticle</code>, Hibernate tự động chèn các bản ghi tương ứng vào bảng liên kết <code>NewsTag</code>.</li>
+      </ul>
+    </div>
+    <div class="flow-step"><span class="step-num">6.</span> Trả về DTO <code>NewsArticleResponse</code>. Client đóng Modal popup và cập nhật bảng danh sách bài viết.</div>
+
+    <h4>C. Luồng Chỉnh sửa Bài viết (Update):</h4>
+    <div class="flow-step"><span class="step-num">1.</span> Bấm icon Sửa ➔ <strong>Popup Dialog</strong> hiển thị đầy đủ thông tin bài viết và các thẻ tag đã chọn từ trước.</div>
+    <div class="flow-step"><span class="step-num">2.</span> Staff cập nhật thông tin ➔ Bấm Lưu ➔ Gửi <code>PUT /api/news-articles/{id}</code>.</div>
+    <div class="flow-step"><span class="step-num">3.</span> Backend cập nhật lại các trường, đồng bộ lại danh sách thẻ trong bảng <code>NewsTag</code>, tự động gán <code>UpdatedByID</code> và <code>ModifiedDate</code> bằng thời gian hiện tại.</div>
+
+    <h4>D. Luồng Xóa Bài viết (Delete with Confirmation):</h4>
+    <div class="flow-step"><span class="step-num">1.</span> Staff bấm icon Thùng rác ➔ <strong>ConfirmModal</strong> xuất hiện hỏi xác nhận.</div>
+    <div class="flow-step"><span class="step-num">2.</span> Khi xác nhận ➔ Gửi <code>DELETE /api/news-articles/{id}</code>. Backend xóa liên kết trong bảng <code>NewsTag</code> rồi xóa bài viết khỏi cơ sở dữ liệu.</div>
+  </div>
+
+  <!-- CHỨC NĂNG 13: STAFF NEWS HISTORY -->
+  <div class="feature-card">
+    <div class="feature-header">6. Chức năng Xem Lịch sử Bài viết của riêng Staff (My News History)</div>
+    <p><strong>Phân quyền:</strong> Dành riêng cho Nhân viên (Staff - Role 2).</p>
+    <div class="flow-step"><span class="step-num">Bước 1:</span> Staff bấm vào menu <strong>"My History"</strong> trên thanh điều hướng Navbar.</div>
+    <div class="flow-step"><span class="step-num">Bước 2:</span> Axios lấy mã nhân viên từ phiên đăng nhập hiện tại và gửi:
+      <pre>GET /api/news-articles/history/{currentStaffId}</pre>
+    </div>
+    <div class="flow-step"><span class="step-num">Bước 3:</span> Backend gọi truy vấn Repository:
+      <pre>findByCreatedBy_AccountIDOrderByCreatedDateDesc(staffId)</pre>
+      Chỉ lọc các bài viết do chính nhân viên này tạo ra (không bị lẫn với bài viết của nhân viên khác).
+    </div>
+    <div class="flow-step"><span class="step-num">Bước 4:</span> Giao diện React hiển thị:
+      <ul>
+        <li>3 thẻ KPI thống kê tự động: <strong>Tổng số bài đã viết</strong>, <strong>Số bài đang Active (đã xuất bản)</strong>, và <strong>Số bài Inactive (bản nháp)</strong>.</li>
+        <li>Bảng danh sách chi tiết các bài viết cá nhân được sắp xếp theo thời gian mới nhất lên đầu.</li>
+        <li>Hộp tìm kiếm nhanh ngay trong lịch sử bài viết của bản thân.</li>
+        <li>Nút <em>"Details"</em> mở Popup Modal xem lại toàn văn nội dung bài viết.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CHỨC NĂNG 14: PROFILE MANAGEMENT -->
+  <div class="feature-card">
+    <div class="feature-header">7. Chức năng Quản lý Thông tin Cá nhân &amp; Đổi Mật khẩu (Profile Management)</div>
+    <p><strong>Phân quyền:</strong> Dành cho cả Staff và Admin.</p>
+    <div class="flow-step"><span class="step-num">Bước 1:</span> Người dùng chọn menu <strong>"Profile"</strong>.</div>
+    <div class="flow-step"><span class="step-num">Bước 2:</span> Giao diện hiển thị Card thông tin cá nhân: Ảnh đại diện avatar, Họ tên, Email, Mã ID, và Huy hiệu vai trò (Admin / Staff).</div>
+    <div class="flow-step"><span class="step-num">Bước 3:</span> Người dùng bấm nút <em>"Edit Profile"</em> ➔ <strong>Popup Dialog (Modal)</strong> xuất hiện.</div>
+    <div class="flow-step"><span class="step-num">Bước 4:</span> Người dùng có thể sửa Họ tên và Email.</div>
+    <div class="flow-step"><span class="step-num">Bước 5 (Đổi mật khẩu):</span> Nếu muốn đổi mật khẩu, người dùng nhập: Mật khẩu hiện tại, Mật khẩu mới và Xác nhận mật khẩu mới.</div>
+    <div class="flow-step"><span class="step-num">Bước 6:</span> Bấm Lưu ➔ Gửi <code>PUT /api/accounts/{id}/profile</code>. Backend kiểm tra:
+      <ul>
+        <li>Kiểm tra mật khẩu cũ: Nếu không khớp mật khẩu hiện tại trong DB ➔ Báo lỗi <code>BadRequestException("Current password does not match.")</code>.</li>
+        <li>Nếu khớp: Cập nhật mật khẩu mới và thông tin tài khoản ➔ Trả về kết quả thành công.</li>
+      </ul>
+    </div>
+    <div class="flow-step"><span class="step-num">Bước 7:</span> Client đóng Modal, cập nhật lại thông tin hiển thị trên trang Profile và thanh Navbar.</div>
+  </div>
+
+  <h2>PHẦN 3: BẢNG TRA CỨU RESTful API ĐẦY ĐỦ</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th width="10%">Method</th>
+        <th width="30%">API Endpoint</th>
+        <th width="15%">Role Quyền</th>
+        <th width="45%">Chức năng chi tiết</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>POST</code></td>
+        <td><code>/api/auth/login</code></td>
+        <td><span class="badge badge-public">Public</span></td>
+        <td>Xác thực đăng nhập email/mật khẩu, trả về thông tin tài khoản &amp; vai trò.</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td><code>/api/public/news</code></td>
+        <td><span class="badge badge-public">Public</span></td>
+        <td>Lấy danh sách tin tức trạng thái Active (hỗ trợ tìm kiếm từ khóa, danh mục).</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td><code>/api/public/news/{id}</code></td>
+        <td><span class="badge badge-public">Public</span></td>
+        <td>Xem chi tiết bài viết tin tức công khai theo ID (đọc trong Modal).</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td><code>/api/public/categories</code></td>
+        <td><span class="badge badge-public">Public</span></td>
+        <td>Lấy danh mục kích hoạt phục vụ bộ lọc tìm kiếm cho khách vãng lai.</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td><code>/api/accounts</code></td>
+        <td><span class="badge badge-admin">Admin</span></td>
+        <td>Lấy danh sách tài khoản, hỗ trợ tìm kiếm tên/email và lọc vai trò Admin/Staff.</td>
+      </tr>
+      <tr>
+        <td><code>POST</code></td>
+        <td><code>/api/accounts</code></td>
+        <td><span class="badge badge-admin">Admin</span></td>
+        <td>Tạo mới tài khoản người dùng qua Popup Modal.</td>
+      </tr>
+      <tr>
+        <td><code>PUT</code></td>
+        <td><code>/api/accounts/{id}</code></td>
+        <td><span class="badge badge-admin">Admin</span></td>
+        <td>Cập nhật tài khoản người dùng qua Popup Modal.</td>
+      </tr>
+      <tr>
+        <td><code>DELETE</code></td>
+        <td><code>/api/accounts/{id}</code></td>
+        <td><span class="badge badge-admin">Admin</span></td>
+        <td>Xóa tài khoản (Kèm ConfirmModal, chặn xóa nếu tài khoản đã tạo bài viết).</td>
+      </tr>
+      <tr>
+        <td><code>PUT</code></td>
+        <td><code>/api/accounts/{id}/profile</code></td>
+        <td><span class="badge badge-staff">Staff</span> / <span class="badge badge-admin">Admin</span></td>
+        <td>Cập nhật thông tin cá nhân và đổi mật khẩu an toàn.</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td><code>/api/categories</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Xem danh sách danh mục tin tức (lọc theo từ khóa, trạng thái active/inactive).</td>
+      </tr>
+      <tr>
+        <td><code>POST</code></td>
+        <td><code>/api/categories</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Tạo mới danh mục tin tức qua Popup Modal.</td>
+      </tr>
+      <tr>
+        <td><code>PUT</code></td>
+        <td><code>/api/categories/{id}</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Cập nhật danh mục tin tức qua Popup Modal.</td>
+      </tr>
+      <tr>
+        <td><code>DELETE</code></td>
+        <td><code>/api/categories/{id}</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Xóa danh mục (Kèm ConfirmModal, chặn xóa nếu danh mục đang chứa bài viết).</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td><code>/api/news-articles</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Quản lý toàn bộ bài viết tin tức (cả Active và Inactive).</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td><code>/api/news-articles/history/{staffId}</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Xem lịch sử các bài viết do nhân viên chỉ định sáng tác.</td>
+      </tr>
+      <tr>
+        <td><code>POST</code></td>
+        <td><code>/api/news-articles</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Tạo mới bài viết tin tức và gắn nhiều thẻ Tag qua Popup Modal.</td>
+      </tr>
+      <tr>
+        <td><code>PUT</code></td>
+        <td><code>/api/news-articles/{id}</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Cập nhật bài viết tin tức và thẻ Tag qua Popup Modal.</td>
+      </tr>
+      <tr>
+        <td><code>DELETE</code></td>
+        <td><code>/api/news-articles/{id}</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Xóa bài viết tin tức (Kèm ConfirmModal, tự động dọn bản ghi bảng NewsTag).</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td><code>/api/tags</code></td>
+        <td><span class="badge badge-staff">Staff</span></td>
+        <td>Lấy toàn bộ danh sách thẻ từ khóa (Tags) để gắn vào bài viết.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br><br>
+  <p style="text-align: right; font-style: italic;">
+    Tài liệu đặc tả hoàn thành và xuất bản tự động bởi Antigravity Senior Developer &copy; 2026.
+  </p>
+
+</body>
+</html>`;
+
+const outputPath = path.resolve('Danh_Sach_Chuc_Nang_Va_Luong_Thuc_Thi_FUNewsManagementSystem.doc');
+fs.writeFileSync(outputPath, docContent, 'utf-8');
+console.log('Successfully generated features doc at:', outputPath);
+
