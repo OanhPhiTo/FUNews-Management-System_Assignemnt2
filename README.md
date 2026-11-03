@@ -1,5 +1,7 @@
 # FUNews Management System — Assignment 2
 
+[![CI](https://github.com/OanhPhiTo/FUNews-Management-System_Assignemnt2/actions/workflows/ci.yml/badge.svg)](https://github.com/OanhPhiTo/FUNews-Management-System_Assignemnt2/actions/workflows/ci.yml)
+
 Ứng dụng quản lý tin tức, gồm backend Spring Boot và frontend React. Hệ thống hỗ trợ đăng nhập theo vai trò, quản lý tài khoản, danh mục, bài viết và thẻ; người dùng có thể xem tin công khai.
 
 ## Công nghệ
